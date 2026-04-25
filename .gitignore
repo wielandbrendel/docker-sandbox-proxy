@@ -1,0 +1,30 @@
+# Runtime state
+sandboxes/*/workspace/.openclaw/
+sandboxes/*/openclaw-data/
+sandboxes/*/gogcli-config/
+sandboxes/*/gmail-filter-certs/
+sandboxes/*/.env
+sandboxes/*/.pnpm-store/
+sandboxes/*/sandbox-init.sh
+sandboxes/*/sandbox-root-setup.sh
+sandboxes/*/workspace/MEMORY.md
+sandboxes/*/workspace/IDENTITY.md
+sandboxes/*/workspace/SOUL.md
+sandboxes/*/workspace/USER.md
+sandboxes/*/workspace/HEARTBEAT.md
+sandboxes/*/workspace/BOOTSTRAP.md
+sandboxes/*/workspace/AGENTS.md
+registry.json
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.venv/
+venv/
+
+# OS
+.DS_Store
