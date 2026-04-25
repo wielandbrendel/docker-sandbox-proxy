@@ -4,15 +4,19 @@ from __future__ import annotations
 
 import re
 
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class OpenClawConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     version: str = "2026.4.11"
     port: int = 18789
 
 
 class NetworkConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     policy: str = "deny"
     allow: list[str] = Field(default_factory=list)
 
@@ -25,17 +29,23 @@ class NetworkConfig(BaseModel):
 
 
 class GmailFilterConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     enabled: bool = False
     host_port: int = 8443   # HTTPS port (for direct host access)
     http_port: int = 8080   # HTTP port (for sandbox agent access via localhost)
 
 
 class ResourceConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     cpus: str = "4"
     memory: str = "8g"
 
 
 class AgentConfig(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     name: str
     description: str = ""
 
