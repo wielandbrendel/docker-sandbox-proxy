@@ -1,0 +1,35 @@
+name: example-minimal
+description: "Minimal sandboxed OpenClaw agent — no integrations"
+
+openclaw:
+  version: "2026.4.11"
+  port: 18789
+
+workspaces:
+  - .
+
+env:
+  TZ: "UTC"
+  # Add your env vars here (refer with ${VAR_NAME})
+
+env_file: .env
+
+gmail_filter:
+  enabled: false
+
+network:
+  policy: deny
+  allow:
+    - "*.openai.com"
+    - "*.chatgpt.com"
+    - "chatgpt.com"
+    - "nodejs.org"
+    - "*.nodejs.org"
+    - "*.npmjs.org"
+    - "*.npmjs.com"
+
+resources:
+  cpus: "2"
+  memory: "4g"
+
+restart_policy: unless-stopped
