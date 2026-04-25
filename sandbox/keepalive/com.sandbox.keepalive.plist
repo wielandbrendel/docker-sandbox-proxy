@@ -6,7 +6,7 @@
     <string>com.sandbox.keepalive</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/Users/wieland/.local/bin/sandbox-keepalive.sh</string>
+        <string>__INSTALL_PATH__/sandbox-keepalive.sh</string>
     </array>
     <!-- StartCalendarInterval is more reliable than StartInterval, which
          macOS aggressively throttles. Fire every 2 min on the dot. -->
