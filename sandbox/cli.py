@@ -1,10 +1,22 @@
 import typer
 
-from sandbox.commands import config, destroy, init, logs, proxy, ps, restart, shell, start, stop
+from sandbox.commands import (
+    check as check_cmd,
+    config,
+    destroy,
+    init,
+    logs,
+    proxy,
+    ps,
+    restart,
+    shell,
+    start,
+    stop,
+)
 
 app = typer.Typer(
     name="sandbox",
-    help="Agent sandbox management CLI (v2 — Docker Sandboxes + NanoClaw)",
+    help="Docker-Sandbox-isolated AI agent management CLI",
     no_args_is_help=True,
 )
 
@@ -18,3 +30,4 @@ app.command()(shell.shell)
 app.command()(destroy.destroy)
 app.command()(config.config)
 app.command()(proxy.proxy)
+app.command("check")(check_cmd.check)
