@@ -1,4 +1,4 @@
-# docker-sandbox-agents
+# docker-sandbox-proxy
 
 Sandboxed AI agents using Docker Desktop Sandbox, OpenClaw, and a multi-layer
 network policy. Agents live in isolated VMs with deny-by-default internet
@@ -21,8 +21,8 @@ None of those layers are bypassable from inside the agent container.
 **Prerequisites:** macOS with Docker Desktop 4.40+, Python 3.12+, ~10 GB free.
 
 ```bash
-git clone https://github.com/your-org/docker-sandbox-agents
-cd docker-sandbox-agents
+git clone https://github.com/wielandbrendel/docker-sandbox-proxy
+cd docker-sandbox-proxy
 python -m venv .venv && source .venv/bin/activate
 pip install -e .
 sandbox --help

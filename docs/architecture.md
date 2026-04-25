@@ -1,6 +1,6 @@
 # Architecture
 
-docker-sandbox-agents runs AI agents inside Docker Desktop Sandbox VMs with
+docker-sandbox-proxy runs AI agents inside Docker Desktop Sandbox VMs with
 deny-by-default network access and, optionally, an operation-level Gmail MITM
 filter that blocks send/delete operations while allowing reads.
 

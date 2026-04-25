@@ -16,8 +16,8 @@ idle-sleep), so skip the keepalive step on Linux.
 ## Step 1: Clone and install
 
 ```bash
-git clone https://github.com/your-org/docker-sandbox-agents
-cd docker-sandbox-agents
+git clone https://github.com/wielandbrendel/docker-sandbox-proxy
+cd docker-sandbox-proxy
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .

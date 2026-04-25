@@ -32,7 +32,7 @@ def _expand_recursive(obj):
 
 
 def get_project_root() -> Path:
-    """Return the project root (docker-sandbox-agents repo root)."""
+    """Return the project root (docker-sandbox-proxy repo root)."""
     return Path(os.environ.get("SANDBOX_HOME", Path(__file__).resolve().parents[2]))
 
 
