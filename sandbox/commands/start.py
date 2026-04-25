@@ -9,6 +9,7 @@ from pathlib import Path
 import typer
 
 from sandbox.config.loader import get_agent_dir, get_project_root, load_agent_config
+from sandbox.errors import die
 from sandbox.docker.client import (
     check_sandbox_support,
     docker_sandbox_create,
@@ -28,7 +29,13 @@ def start(
         typer.echo("Error: Docker Sandbox support not found. Need Docker Desktop v4.40+.", err=True)
         raise typer.Exit(1)
 
-    config = load_agent_config(name)
+    try:
+        config = load_agent_config(name)
+    except FileNotFoundError:
+        die(
+            f"No agent.yaml found for '{name}'",
+            fix=f"sandbox init {name}  (or check the agent name)",
+        )
     agent_dir = get_agent_dir(name)
     agent_dir_str = str(agent_dir)
 
@@ -45,8 +52,10 @@ def start(
         gmail_mgr.start(http_port=config.gmail_filter.http_port)
         typer.echo("  Waiting for gmail-filter to become healthy...")
         if not gmail_mgr.wait_for_healthy(timeout=30):
-            typer.echo("Error: gmail-filter did not become healthy in 30s.", err=True)
-            raise typer.Exit(1)
+            die(
+                "gmail-filter did not become healthy in 30s",
+                fix=f"docker logs gmail-filter-{name}  (check for port conflicts or image issues)",
+            )
         typer.echo("  gmail-filter healthy.")
 
     # 3. Create Docker Sandbox with custom template (idempotent)
