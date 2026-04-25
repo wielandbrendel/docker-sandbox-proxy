@@ -10,7 +10,9 @@ workspaces:
 
 env:
   TZ: "UTC"
-  # Add your env vars here (refer with ${VAR_NAME})
+  # Add your env vars here. Reference .env values with shell-style
+  # interpolation, for example:
+  #   OPENAI_API_KEY: $OPENAI_API_KEY
 
 env_file: .env
 
