@@ -1,0 +1,10 @@
+{
+  "channels": { "telegram": { "enabled": true } },
+  "plugins": { "entries": { "telegram": { "enabled": true } } },
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "warmup00000000000000000000000000000000000000"
+    }
+  }
+}

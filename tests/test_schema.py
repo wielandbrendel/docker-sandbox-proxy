@@ -6,7 +6,7 @@ def test_minimal_config():
     cfg = AgentConfig(name="test-agent")
     assert cfg.name == "test-agent"
     assert cfg.description == ""
-    assert cfg.openclaw.version == "2026.4.11"
+    assert cfg.openclaw.version == "2026.4.24"
     assert cfg.openclaw.port == 18789
     assert cfg.workspaces == []
     assert cfg.env == {}

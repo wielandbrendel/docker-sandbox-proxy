@@ -115,12 +115,18 @@ def generate_init_script(config: AgentConfig, agent_dir: str) -> str:
             "",
         ])
 
-    # Proxy bootstrap for Node.js fetch
+    # Proxy environment (rely on Node's built-in env-proxy support; do NOT
+    # use NODE_OPTIONS=--require proxy-bootstrap.cjs — that hangs OpenClaw
+    # >= 2026.4.24 at "loading configuration…" because the bootstrap
+    # interferes with pnpm child workers used for plugin staging).
     lines.extend([
-        "# ── Proxy bootstrap (make Node.js fetch work through sandbox MITM proxy) ──",
-        f'export NODE_OPTIONS="--require {agent_dir}/proxy-bootstrap.cjs"',
-        "# Tell OpenClaw the proxy bootstrap is already loaded (don't override dispatcher)",
-        'export OPENCLAW_NODE_OPTIONS_READY=1',
+        "# ── Proxy env (Node's undici reads HTTPS_PROXY/HTTP_PROXY natively) ──",
+        'export HTTP_PROXY="http://host.docker.internal:3128"',
+        'export HTTPS_PROXY="http://host.docker.internal:3128"',
+        'export http_proxy="http://host.docker.internal:3128"',
+        'export https_proxy="http://host.docker.internal:3128"',
+        'export NO_PROXY="localhost,127.0.0.1,host.docker.internal"',
+        'export no_proxy="localhost,127.0.0.1,host.docker.internal"',
         "",
     ])
 

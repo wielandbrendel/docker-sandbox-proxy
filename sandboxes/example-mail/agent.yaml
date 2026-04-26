@@ -2,7 +2,7 @@ name: example-mail
 description: "OpenClaw agent with Gmail (operation-filtered) and Telegram"
 
 openclaw:
-  version: "2026.4.11"
+  version: "2026.4.24"
   port: 18789
 
 workspaces:

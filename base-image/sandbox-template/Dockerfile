@@ -6,7 +6,7 @@
 
 FROM node:22-alpine
 
-ARG OPENCLAW_VERSION=2026.4.11
+ARG OPENCLAW_VERSION=2026.4.24
 ARG GOGCLI_VERSION=0.11.0
 
 # System packages
@@ -29,6 +29,24 @@ USER agent
 ENV PNPM_HOME=/home/agent/.local/share/pnpm
 ENV PATH=/usr/local/bin:${PNPM_HOME}:$PATH
 RUN pnpm install -g openclaw@${OPENCLAW_VERSION} https-proxy-agent undici
+
+# Pre-stage OpenClaw bundled plugin deps so first-boot doesn't need pnpm at
+# runtime. Without this, plugin staging takes 60-150s on first boot.
+# Stage with telegram enabled so its grammy deps get installed too.
+COPY warmup-config.json /tmp/warmup-config.json
+RUN mkdir -p /home/agent/.openclaw && \
+    cp /tmp/warmup-config.json /home/agent/.openclaw/openclaw.json && \
+    openclaw gateway --port 18790 --allow-unconfigured > /tmp/warmup.log 2>&1 & \
+    GATEWAY_PID=$! ; \
+    for i in $(seq 1 180); do \
+        grep -q "ready (" /tmp/warmup.log && break ; \
+        sleep 1 ; \
+    done ; \
+    kill $GATEWAY_PID 2>/dev/null ; \
+    wait $GATEWAY_PID 2>/dev/null ; \
+    grep -q "ready (" /tmp/warmup.log || (echo "Plugin warmup failed" && tail -30 /tmp/warmup.log && exit 1) ; \
+    echo "Plugins staged successfully" ; \
+    rm -rf /tmp/warmup.log /tmp/warmup-config.json /home/agent/.openclaw/openclaw.json /home/agent/.openclaw/openclaw.json.bak /home/agent/.openclaw/openclaw.json.last-good /home/agent/.openclaw/agents 2>/dev/null || true
 
 # Install gogcli
 USER root
