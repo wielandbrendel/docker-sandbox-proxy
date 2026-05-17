@@ -76,6 +76,12 @@ def generate_root_setup_script(config: AgentConfig, agent_dir: str) -> str:
         "# ── Create /workspace symlink (OpenClaw default) ──",
         f'ln -sfn "{agent_dir}/workspace" /workspace 2>/dev/null || true',
         "",
+        "# ── Expose Gmail safety wrapper on PATH ──",
+        f'if [ -x "{agent_dir}/gmail-tool.sh" ]; then',
+        f'    ln -sfn "{agent_dir}/gmail-tool.sh" /usr/local/bin/gmail-tool',
+        '    echo "[root-setup] Linked gmail-tool"',
+        "fi",
+        "",
         "# ── Fix sqlite-vec library path (double .so.so bug) ──",
         'VEC_SO=$(ls /home/agent/.local/share/pnpm/global/5/.pnpm/sqlite-vec-linux-*/node_modules/sqlite-vec-linux-*/vec0.so 2>/dev/null | head -1)',
         'if [ -n "$VEC_SO" ] && [ ! -f "${VEC_SO}.so" ]; then',
@@ -98,7 +104,7 @@ def generate_init_script(config: AgentConfig, agent_dir: str) -> str:
         "set -e",
         "",
         "# ── PATH setup ──",
-        'export PATH="/usr/local/bin:/home/agent/.local/share/pnpm:$PATH"',
+        'export PATH="/usr/local/bin:/home/agent/.local/share/pnpm/bin:/home/agent/.local/share/pnpm:$PATH"',
         "",
     ]
 
@@ -116,8 +122,8 @@ def generate_init_script(config: AgentConfig, agent_dir: str) -> str:
         ])
 
     # Proxy environment (rely on Node's built-in env-proxy support; do NOT
-    # use NODE_OPTIONS=--require proxy-bootstrap.cjs — that hangs OpenClaw
-    # >= 2026.4.24 at "loading configuration…" because the bootstrap
+    # use NODE_OPTIONS=--require proxy-bootstrap.cjs — that can hang OpenClaw
+    # at "loading configuration…" because the bootstrap
     # interferes with pnpm child workers used for plugin staging).
     lines.extend([
         "# ── Proxy env (Node's undici reads HTTPS_PROXY/HTTP_PROXY natively) ──",

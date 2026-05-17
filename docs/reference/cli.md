@@ -281,7 +281,7 @@ Output:
 name: my-agent
 description: Gmail reader
 openclaw:
-  version: 2026.4.11
+  version: 2026.5.7
   port: 18789
 ...
 ```

@@ -118,14 +118,14 @@ Controls the OpenClaw gateway process inside the VM.
 
 ```yaml
 openclaw:
-  version: "2026.4.11"
+  version: "2026.5.7"
   port: 18789
 ```
 
 ### `openclaw.version`
 
 **Type:** string
-**Default:** `"2026.4.11"`
+**Default:** `"2026.5.7"`
 
 OpenClaw version to run. The base image ships a pinned version; changing this
 requires rebuilding the base image unless the new version is already installed.
@@ -254,7 +254,7 @@ name: my-mail
 description: "Gmail reader and Telegram assistant"
 
 openclaw:
-  version: "2026.4.11"
+  version: "2026.5.7"
   port: 18789
 
 workspaces:

@@ -10,7 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 class OpenClawConfig(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    version: str = "2026.4.24"
+    version: str = "2026.5.7"
     port: int = 18789
 
 

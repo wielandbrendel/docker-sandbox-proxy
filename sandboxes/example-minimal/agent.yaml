@@ -2,7 +2,7 @@ name: example-minimal
 description: "Minimal sandboxed OpenClaw agent — no integrations"
 
 openclaw:
-  version: "2026.4.24"
+  version: "2026.5.7"
   port: 18789
 
 workspaces:

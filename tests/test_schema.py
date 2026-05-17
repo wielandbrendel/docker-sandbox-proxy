@@ -6,7 +6,7 @@ def test_minimal_config():
     cfg = AgentConfig(name="test-agent")
     assert cfg.name == "test-agent"
     assert cfg.description == ""
-    assert cfg.openclaw.version == "2026.4.24"
+    assert cfg.openclaw.version == "2026.5.7"
     assert cfg.openclaw.port == 18789
     assert cfg.workspaces == []
     assert cfg.env == {}
@@ -35,9 +35,9 @@ def test_name_validation_allows_hyphens():
 
 def test_full_config():
     cfg = AgentConfig(
-        name="openclaw-mail",
+        name="example-mail",
         description="Test agent",
-        openclaw=OpenClawConfig(version="2026.4.0", port=19000),
+        openclaw=OpenClawConfig(version="2026.5.0", port=19000),
         workspaces=["~/workspace", "~/docs:ro"],
         env={"TZ": "Europe/Berlin"},
         env_file=".env",
@@ -45,7 +45,7 @@ def test_full_config():
         network=NetworkConfig(policy="deny", allow=["*.github.com"]),
         resources=ResourceConfig(cpus="2", memory="4g"),
     )
-    assert cfg.openclaw.version == "2026.4.0"
+    assert cfg.openclaw.version == "2026.5.0"
     assert cfg.openclaw.port == 19000
     assert cfg.gmail_filter.host_port == 8443
     assert cfg.network.allow == ["*.github.com"]

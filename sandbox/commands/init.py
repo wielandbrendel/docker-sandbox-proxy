@@ -15,7 +15,7 @@ name: {name}
 description: "{description}"
 
 openclaw:
-  version: "2026.3.8"
+  version: "2026.5.7"
   port: 18789
 
 workspaces:
@@ -98,8 +98,8 @@ def init(
     # Create empty .env
     (agent_dir / ".env").write_text("# Agent secrets — ${VAR} references expanded at load time\n")
 
-    # Copy proxy-bootstrap.cjs template
-    template = get_project_root() / "sandboxes" / "openclaw-mail" / "proxy-bootstrap.cjs"
+    # Copy proxy-bootstrap.cjs template if present for legacy/custom agents.
+    template = get_project_root() / "sandboxes" / "example-mail" / "proxy-bootstrap.cjs"
     if template.exists():
         import shutil
         shutil.copy2(template, agent_dir / "proxy-bootstrap.cjs")

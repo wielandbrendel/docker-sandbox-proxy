@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # gmail-tool: Access Gmail API through the security filter.
 #
-# All requests go through http://host.docker.internal:8080 (the gmail-filter),
+# All Gmail API requests go through http://host.docker.internal:8080 via the
+# Docker Sandbox proxy. A direct connection to that host:port can be refused
+# from inside the sandbox; the proxy rewrites it to the host-side gmail-filter,
 # which blocks send/delete operations while allowing read/draft/archive.
 #
 # Usage:
@@ -103,7 +105,8 @@ api() {
     token=$(get_access_token) || exit 1
 
     local result
-    result=$(curl -s --max-time 30 "${FILTER}${path}" \
+    result=$(NO_PROXY="localhost,127.0.0.1" no_proxy="localhost,127.0.0.1" \
+        curl -s --max-time 30 "${FILTER}${path}" \
         -X "$method" \
         -H "Authorization: Bearer $token" \
         -H "Content-Type: application/json" \
@@ -113,7 +116,8 @@ api() {
     if echo "$result" | grep -q '"code": 401' 2>/dev/null; then
         rm -f "$TOKEN_CACHE"
         token=$(get_access_token) || exit 1
-        result=$(curl -s --max-time 30 "${FILTER}${path}" \
+        result=$(NO_PROXY="localhost,127.0.0.1" no_proxy="localhost,127.0.0.1" \
+            curl -s --max-time 30 "${FILTER}${path}" \
             -X "$method" \
             -H "Authorization: Bearer $token" \
             -H "Content-Type: application/json" \

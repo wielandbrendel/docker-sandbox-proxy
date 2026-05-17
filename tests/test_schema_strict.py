@@ -11,4 +11,4 @@ def test_unknown_top_level_key_rejected():
 def test_unknown_nested_key_rejected():
     from sandbox.config.schema import OpenClawConfig
     with pytest.raises(ValidationError, match="extra"):
-        OpenClawConfig(version="2026.4.11", port=18789, mystery_field=True)
+        OpenClawConfig(version="2026.5.7", port=18789, mystery_field=True)

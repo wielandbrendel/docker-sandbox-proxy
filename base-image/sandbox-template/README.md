@@ -1,6 +1,6 @@
 # sandbox-template base image
 
-Alpine + Node 22 + pnpm + OpenClaw 2026.4.11 + gogcli, pre-installed.
+Alpine + Node 22 + pnpm + OpenClaw 2026.5.7 + gogcli, pre-installed.
 
 ## Build
 

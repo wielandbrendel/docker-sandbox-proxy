@@ -60,7 +60,7 @@ If you run multiple agents, each needs a different port.
 
 ```yaml
 openclaw:
-  version: "2026.4.11"
+  version: "2026.5.7"
   port: 18790
 ```
 
